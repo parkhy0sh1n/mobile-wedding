@@ -50,6 +50,11 @@
         position: relative;
       }
 
+      /* 배경 음악 오디오 숨기기 */
+      #bgm {
+        display: none;
+      }
+
       /* 커스텀 스크롤바 */
       ::-webkit-scrollbar {
         width: 3px;
@@ -984,6 +989,11 @@
   </head>
 
   <body>
+    <audio
+      id="bgm"
+      src="./assets/music/L’Amour, Les Baguettes, Paris [NzNntz-YA0U].mp3"
+      loop
+    ></audio>
     <div id="app">
       <div class="modern-wrapper">
         <!-- 로딩 화면 -->
@@ -1758,6 +1768,36 @@
         });
       }
 
+      // ===== 배경 음악 =====
+      function initBgm() {
+        const audio = document.getElementById("bgm");
+        if (!audio) return;
+
+        // 볼륨 살짝만 줄이고 시작 (0~1 사이)
+        audio.volume = 0.6;
+
+        const tryPlay = () => {
+          audio
+            .play()
+            .then(() => {
+              // 재생이 성공하면 이벤트리스너 제거
+              document.removeEventListener("click", tryPlay);
+              document.removeEventListener("touchstart", tryPlay);
+            })
+            .catch(() => {
+              // 자동재생이 막혀도 에러만 무시하고
+              // 첫 클릭/터치에서 다시 시도하게 둠
+            });
+        };
+
+        // 페이지 로드 시 한 번 시도
+        tryPlay();
+
+        // 사용자가 화면을 터치/클릭하는 순간 재생 재시도
+        document.addEventListener("click", tryPlay);
+        document.addEventListener("touchstart", tryPlay);
+      }
+
       // ===== 네이버 지도 =====
       function initMap() {
         const container = document.getElementById("map");
@@ -1809,6 +1849,7 @@
         initLightbox();
         initKeyboard();
         initTouch();
+        initBgm();
 
         // 달력/카운트다운
         generateCalendar(CAL_YEAR, CAL_MONTH);
