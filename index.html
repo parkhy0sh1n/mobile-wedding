@@ -1769,29 +1769,30 @@
         const audio = document.getElementById("bgm");
         if (!audio) return;
 
-        // 볼륨 살짝만 줄이고 시작 (0~1 사이)
         audio.volume = 0.6;
 
+        let isTried = false;
+
         const tryPlay = () => {
+          if (isTried) return;
+          isTried = true;
+
           audio
             .play()
             .then(() => {
-              // 재생이 성공하면 이벤트리스너 제거
-              document.removeEventListener("click", tryPlay);
-              document.removeEventListener("touchstart", tryPlay);
+              console.log("BGM 재생 시작");
             })
-            .catch(() => {
-              // 자동재생이 막혀도 에러만 무시하고
-              // 첫 클릭/터치에서 다시 시도하게 둠
+            .catch((err) => {
+              console.log("BGM 재생 실패:", err);
+              // 실패하면 다시 시도할 수 있게 풀어둠
+              isTried = false;
             });
         };
 
-        // 페이지 로드 시 한 번 시도
-        tryPlay();
-
-        // 사용자가 화면을 터치/클릭하는 순간 재생 재시도
-        document.addEventListener("click", tryPlay);
-        document.addEventListener("touchstart", tryPlay);
+        // PC / 모바일 공통: 아무 동작이나 한 번만 해도 재생 시도
+        ["click", "touchstart", "keydown", "wheel"].forEach((eventName) => {
+          document.addEventListener(eventName, tryPlay, { once: true });
+        });
       }
 
       // ===== 네이버 지도 =====
