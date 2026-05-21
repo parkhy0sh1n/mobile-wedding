@@ -10,7 +10,16 @@
     />
     <meta property="og:title" content="김민서💍박예나 결혼합니다!" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="./assets/images/02.jpg" />
+    <meta
+      property="og:image"
+      content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/39.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/39.jpg"
+    />
+    <link rel="icon" type="image/png" href="./assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="./assets/images/favicon.png" />
     <meta
       property="og:description"
       content="2026.12.19 토요일 오후 4시, 더베뉴지서울에서 뵙겠습니다."
@@ -1336,6 +1345,30 @@
         flex: 0 0 auto;
       }
 
+      .location-action,
+      .location-copy-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: #b7b7b7;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .location-action:hover,
+      .location-copy-button:hover,
+      .location-action:focus-visible,
+      .location-copy-button:focus-visible {
+        color: #061329;
+        outline: none;
+      }
+
       .map .map-container {
         height: 224px;
         margin: 3.45rem 0 0;
@@ -1507,7 +1540,7 @@
             rgba(0, 0, 0, 0.44) 68%,
             rgba(0, 0, 0, 0.58) 100%
           ),
-          url("./assets/images/27.jpg");
+          url("./assets/images/27.JPG");
         background-size: cover;
         background-position: center;
       }
@@ -1661,6 +1694,39 @@
         font-size: 0.85rem;
         color: rgba(38, 27, 25, 0.72);
         margin-bottom: 1rem;
+      }
+
+      /* 상단 토스트 */
+      .toast {
+        position: fixed;
+        top: 18px;
+        top: calc(env(safe-area-inset-top, 0px) + 18px);
+        left: 50%;
+        z-index: 10003;
+        max-width: calc(min(100vw, 480px) - 40px);
+        padding: 0.72rem 1rem;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        font-size: 0.86rem;
+        font-weight: 500;
+        line-height: 1.35;
+        text-align: center;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, -12px);
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition:
+          opacity 0.24s ease,
+          transform 0.24s ease;
+      }
+
+      .toast.is-visible {
+        opacity: 1;
+        transform: translate(-50%, 0);
       }
 
       /* 고정 TOP 버튼 */
@@ -1932,6 +1998,8 @@
           TOP
         </button>
 
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
         <!-- 플로팅 요소들 -->
         <div
           class="floating-element floating-dot"
@@ -2132,32 +2200,46 @@
           <div class="location-summary">
             <div class="location-venue">
               <span>더베뉴지서울</span>
-              <svg
-                class="location-mini-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+              <a
+                href="tel:0226572100"
+                class="location-action"
+                aria-label="더베뉴지서울 전화 연결"
               >
-                <path
-                  fill="currentColor"
-                  d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24c1.12.37 2.33.57 3.57.57c.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1c0 1.24.2 2.45.57 3.57c.11.35.03.74-.25 1.02z"
-                />
-              </svg>
+                <svg
+                  class="location-mini-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24c1.12.37 2.33.57 3.57.57c.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1c0 1.24.2 2.45.57 3.57c.11.35.03.74-.25 1.02z"
+                  />
+                </svg>
+              </a>
             </div>
             <br />
             <div class="location-address">
               <span>서울특별시 강서구 강서로 388</span>
-              <svg
-                class="location-mini-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+              <button
+                type="button"
+                class="location-copy-button"
+                data-copy-text="서울특별시 강서구 강서로 388"
+                data-copy-message="주소가 복사됐습니다"
+                aria-label="더베뉴지서울 주소 복사"
               >
-                <path
-                  fill="currentColor"
-                  d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
-                />
-              </svg>
+                <svg
+                  class="location-mini-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M16 1H4c-1.1 0-2 .9-2 2v12h2V3h12zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2m0 16H8V7h11z"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -2705,6 +2787,60 @@
         URL.revokeObjectURL(url);
       }
 
+      // ===== 상단 토스트 =====
+      let toastTimer = null;
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        if (!toast) return;
+
+        toast.textContent = message;
+        toast.classList.add("is-visible");
+
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove("is-visible");
+        }, 2000);
+      }
+
+      async function copyTextToClipboard(text) {
+        if (!text) return;
+
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      // ===== 위치 정보 복사 =====
+      function initLocationActions() {
+        document.querySelectorAll("[data-copy-text]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const copyText = button.getAttribute("data-copy-text");
+            const message =
+              button.getAttribute("data-copy-message") || "복사됐습니다";
+
+            try {
+              await copyTextToClipboard(copyText);
+              showToast(message);
+            } catch (error) {
+              console.log("복사 실패:", error);
+              showToast("복사에 실패했습니다");
+            }
+          });
+        });
+      }
+
       // ===== 계좌 복사 =====
       function initAccountCopy() {
         document
@@ -2714,16 +2850,13 @@
               const accountNumber = btn.getAttribute("data-account");
               if (!accountNumber) return;
 
-              await navigator.clipboard.writeText(accountNumber);
-
-              const originalText = btn.textContent;
-              btn.textContent = "복사됨";
-              btn.classList.add("copied");
-
-              setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove("copied");
-              }, 2000);
+              try {
+                await copyTextToClipboard(accountNumber);
+                showToast("계좌번호가 복사됐습니다");
+              } catch (error) {
+                console.log("계좌번호 복사 실패:", error);
+                showToast("복사에 실패했습니다");
+              }
             });
           });
       }
@@ -2795,7 +2928,6 @@
         "./assets/images/20.jpg",
         "./assets/images/21.jpg",
         "./assets/images/22.jpg",
-        "./assets/images/23.jpg",
         "./assets/images/24.jpg",
         "./assets/images/25.jpg",
         "./assets/images/26.JPG",
@@ -2803,7 +2935,6 @@
         "./assets/images/28.JPG",
         "./assets/images/29.JPG",
         "./assets/images/30.JPG",
-        "./assets/images/31.jpg",
         "./assets/images/32.jpg",
         "./assets/images/33.jpg",
         "./assets/images/34.jpg",
@@ -2818,21 +2949,7 @@
         "./assets/images/43.jpg",
         "./assets/images/44.jpg",
         "./assets/images/45.jpg",
-        "./assets/images/46.jpg",
-        "./assets/images/47.jpg",
-        "./assets/images/48.jpg",
-        "./assets/images/49.jpg",
-        "./assets/images/50.jpg",
-        "./assets/images/51.jpg",
-        "./assets/images/52.jpg",
-        "./assets/images/53.jpg",
         "./assets/images/54.jpg",
-        "./assets/images/55.jpg",
-        "./assets/images/56.jpg",
-        "./assets/images/57.jpg",
-        "./assets/images/58.jpg",
-        "./assets/images/59.jpg",
-        "./assets/images/60.jpg",
       ];
 
       function initGallery() {
@@ -3120,10 +3237,12 @@
           if (wantsMusic) {
             audio.pause();
             setMusicState(false);
+            showToast("배경음악이 꺼졌습니다");
             return;
           }
 
           setMusicState(true);
+          showToast("배경음악이 켜졌습니다");
           tryPlay();
         });
 
@@ -3230,6 +3349,7 @@
         initObserver();
         initParallax();
         initScrollIndicator();
+        initLocationActions();
         initAccountCopy();
         initAccountAccordion();
         // initMessageForm();
