@@ -10,8 +10,14 @@
     />
     <meta property="og:title" content="김민서💍박예나 결혼합니다!" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/39.jpg" />
-    <meta property="og:image:secure_url" content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/39.jpg" />
+    <meta
+      property="og:image"
+      content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/thum.jpg"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://parkhy0sh1n.github.io/mobile-wedding/assets/images/thum.jpg"
+    />
     <link rel="icon" type="image/png" href="./assets/images/favicon.png" />
     <link rel="apple-touch-icon" href="./assets/images/favicon.png" />
     <meta
@@ -1939,7 +1945,6 @@
         }
       }
 
-
       @media (max-width: 480px) {
         .section.greeting {
           min-height: auto;
@@ -1953,7 +1958,6 @@
           justify-content: center;
         }
       }
-
     </style>
   </head>
 
@@ -1989,7 +1993,14 @@
           </button>
         </div>
 
-        <button type="button" class="top-button" id="topButton" aria-label="맨 위로 이동">TOP</button>
+        <button
+          type="button"
+          class="top-button"
+          id="topButton"
+          aria-label="맨 위로 이동"
+        >
+          TOP
+        </button>
 
         <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -2065,7 +2076,9 @@
                 alt="신랑"
                 class="person-photo"
               />
-              <div class="person-name"><span class="person-role">신랑</span>김민서</div>
+              <div class="person-name">
+                <span class="person-role">신랑</span>김민서
+              </div>
               <div class="person-info">
                 이영애의 장남<br />
                 1999년 8월 인천 출생
@@ -2078,7 +2091,9 @@
                 alt="신부"
                 class="person-photo"
               />
-              <div class="person-name"><span class="person-role">신부</span>박예나</div>
+              <div class="person-name">
+                <span class="person-role">신부</span>박예나
+              </div>
               <div class="person-info">
                 박병선 · 송성숙의 차녀<br />
                 1996년 2월 서울 출생
@@ -3272,7 +3287,8 @@
           const x = rect.left + rect.width / 2;
           const y = rect.top + rect.height / 2;
           const elementBelowButton = document.elementFromPoint(x, y);
-          const currentSection = elementBelowButton?.closest?.(".section, .hero");
+          const currentSection =
+            elementBelowButton?.closest?.(".section, .hero");
 
           const isLightSection =
             currentSection &&
@@ -3284,7 +3300,9 @@
         };
 
         updateTopButtonTheme();
-        window.addEventListener("scroll", updateTopButtonTheme, { passive: true });
+        window.addEventListener("scroll", updateTopButtonTheme, {
+          passive: true,
+        });
         window.addEventListener("resize", updateTopButtonTheme);
       }
 
