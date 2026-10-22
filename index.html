@@ -1155,6 +1155,18 @@
         border-color: #111;
       }
 
+      .event #kakaoShareBtn {
+        background: #fee500;
+        border-color: #fee500;
+        color: #191919;
+      }
+
+      .event #kakaoShareBtn:hover {
+        background: #fada0a;
+        border-color: #fada0a;
+        color: #191919;
+      }
+
       /* 지도 섹션 */
       .map {
         background: #fff;
@@ -2185,6 +2197,10 @@
               >
                 캘린더 추가
               </button>
+              <!-- URL이 직접 노출되지 않는 카카오톡 공유 카드 전송 -->
+              <button type="button" class="btn btn-filled" id="kakaoShareBtn">
+                카카오톡 공유
+              </button>
             </div>
           </div>
         </section>
@@ -2555,6 +2571,12 @@
       </div>
     </div>
 
+    <!-- 카카오톡 공유용 JavaScript SDK (카카오 공식 배포본) -->
+    <script
+      src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.2/kakao.min.js"
+      integrity="sha384-zt/G7/KfaRQ9dT/QIkS0ujMtzouJqzuSJcXVQu50x0rl/+mD1dc70AeOejVbMD9E"
+      crossorigin="anonymous"
+    ></script>
     <script>
       // ===== 설정 =====
       const WEDDING_ISO = "2026-12-19T16:00:00+09:00";
@@ -3337,6 +3359,60 @@
         }
       }
 
+      // ===== 카카오톡 공유 (주소가 보이지 않는 피드 카드) =====
+      // 카카오디벨로퍼스 > 앱 > 플랫폼 키 > JavaScript 키 값을 입력하세요.
+      // 앱에 현재 청첩장 도메인을 JavaScript SDK 도메인과 제품 링크 관리 웹 도메인으로 등록해야 합니다.
+      const KAKAO_JAVASCRIPT_KEY = "b02ad9641bba439bf9fb5a63b7df3a83";
+
+      function initKakaoShare() {
+        const shareButton = document.getElementById("kakaoShareBtn");
+        if (!shareButton) return;
+
+        shareButton.addEventListener("click", () => {
+          if (KAKAO_JAVASCRIPT_KEY === "YOUR_KAKAO_JAVASCRIPT_KEY") {
+            showToast("카카오 JavaScript 키를 먼저 입력해 주세요");
+            return;
+          }
+
+          if (!window.Kakao || !window.Kakao.Share) {
+            showToast("카카오톡 공유 기능을 불러오지 못했습니다");
+            return;
+          }
+
+          try {
+            if (!window.Kakao.isInitialized()) {
+              window.Kakao.init(KAKAO_JAVASCRIPT_KEY);
+            }
+
+            // 기존 OG 메타데이터를 그대로 사용합니다(사진·제목·날짜·장소 변경 없음).
+            const getOg = (name) =>
+              document.querySelector(`meta[property="${name}"]`)?.content || "";
+            // 파일에 적힌 og:url이 아닌 실제 방문 중인 사이트 주소로 이동합니다.
+            const shareUrl = window.location.origin + window.location.pathname;
+            const target = { mobileWebUrl: shareUrl, webUrl: shareUrl };
+
+            window.Kakao.Share.sendDefault({
+              objectType: "feed",
+              content: {
+                title: getOg("og:title") || document.title,
+                description: getOg("og:description"),
+                imageUrl: getOg("og:image"),
+                link: target,
+              },
+              buttons: [
+                {
+                  title: "모바일 청첩장 보기",
+                  link: target,
+                },
+              ],
+            });
+          } catch (error) {
+            console.error("카카오톡 공유 오류:", error);
+            showToast("카카오 설정과 등록된 도메인을 확인해 주세요");
+          }
+        });
+      }
+
       // ===== 초기화 =====
       (function init() {
         initLoader();
@@ -3354,6 +3430,7 @@
         initPetals();
         initBgm();
         initTopButton();
+        initKakaoShare();
         // initTopButtonTheme();
 
         // 달력/카운트다운
