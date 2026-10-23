@@ -3373,7 +3373,7 @@
             return;
           }
 
-          if (!window.Kakao || !window.Kakao.Share) {
+          if (!window.Kakao) {
             showToast("카카오톡 공유 기능을 불러오지 못했습니다");
             return;
           }
@@ -3381,6 +3381,10 @@
           try {
             if (!window.Kakao.isInitialized()) {
               window.Kakao.init(KAKAO_JAVASCRIPT_KEY);
+            }
+
+            if (!window.Kakao.Share) {
+              throw new Error("카카오톡 공유 모듈을 초기화하지 못했습니다");
             }
 
             // 기존 OG 메타데이터를 그대로 사용합니다(사진·제목·날짜·장소 변경 없음).
