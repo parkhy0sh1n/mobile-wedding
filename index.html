@@ -22,7 +22,7 @@
     <link rel="apple-touch-icon" href="./assets/images/favicon.png" />
     <meta
       property="og:description"
-      content="2026.12.19 토요일 오후 4시, 더베뉴지서울 2F 베뉴지홀"
+      content="2026.12.19 토요일 오후 4시&#10;더베뉴지서울 2F 베뉴지홀"
     />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -3362,6 +3362,8 @@
       // 카카오디벨로퍼스 > 앱 > 플랫폼 키 > JavaScript 키 값을 입력하세요.
       // 앱에 현재 청첩장 도메인을 JavaScript SDK 도메인과 제품 링크 관리 웹 도메인으로 등록해야 합니다.
       const KAKAO_JAVASCRIPT_KEY = "b02ad9641bba439bf9fb5a63b7df3a83";
+      const KAKAO_SHARE_DESCRIPTION =
+        "2026.12.19 토요일 오후 4시\n더베뉴지서울 2F 베뉴지홀";
 
       function initKakaoShare() {
         const shareButton = document.getElementById("kakaoShareBtn");
@@ -3398,7 +3400,7 @@
               objectType: "feed",
               content: {
                 title: getOg("og:title") || document.title,
-                description: getOg("og:description"),
+                description: KAKAO_SHARE_DESCRIPTION,
                 imageUrl: getOg("og:image"),
                 link: target,
               },
